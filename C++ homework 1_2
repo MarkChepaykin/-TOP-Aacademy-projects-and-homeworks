@@ -1,0 +1,14 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    cout << "EVERY\n";
+    cout << "\tHUNTER\n";
+    cout << "\t\tWANTS\n";
+    cout << "\t\t\tTO KNOW\n \n";
+    cout << "\t\t\t\tWHERE\n";
+    cout << "\t\t\t\t\tTHE PHEASANT\n";
+    cout << "\t\t\t\t\t\tSITS\n";
+    return 0;
+}
