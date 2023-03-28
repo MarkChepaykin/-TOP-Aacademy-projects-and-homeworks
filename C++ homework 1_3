@@ -1,0 +1,14 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{   
+    setlocale(LC_ALL, "Rus");
+    cout << "\t\t\tДомашние деньги\n";
+    cout << "\t\t\tТелефон: 8-800-555-3535\n";
+    cout << "\t\t\tЛучше позвонить,\n";
+    cout << "\t\t\tЧем у кого-то занимать\n";
+    cout << "\t\t\t8-800 \t |555-3535|\n";
+    cout << "\t\t\t8-800 \t |555-3535|\n\n";
+    return 0;
+}
