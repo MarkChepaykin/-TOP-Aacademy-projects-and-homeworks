@@ -1,0 +1,238 @@
+#include <iostream>
+using namespace std;
+
+void task1()
+{
+    int number, d1, d2, d3, d4, d5, d6, sum1, sum2, temp;
+    cout << "Enter a 6 digit number to check if it is lucky\n ";
+    cin >> number;
+    
+    if (number > 99999 && number < 1000000) 
+    {
+        cout << "Your number is ";
+        d6 = number % 10;
+        temp = number / 10;
+         
+        d5 = temp % 10;
+        temp = temp / 10;
+
+        d4 = temp % 10;
+        temp = temp / 10;
+
+        d3 = temp % 10;
+        temp = temp / 10;
+
+        d2 = temp % 10;
+        temp = temp / 10;
+
+        d1 = temp % 10;
+        temp = temp / 10;
+
+        //cout << d1 << " " << d2 << " " << d3 << " " << d4 << " " << d5 << " " << d6;
+
+        sum1 = d1 + d2 + d3; 
+        sum2 = d4 + d5 + d6; 
+
+        if (sum1 == sum2)
+        {
+            cout << "lucky!\n";
+        }
+        else
+        {
+            cout << "unlucky..\n";
+        }
+     
+    }
+    else
+    {
+        cout << "Incorrect input\n";
+    }
+}
+
+void task2()
+{
+    int number, d1, d2, d3, d4, temp;
+   
+    cout << "Enter a 4 digit number: ";
+    cin >> number;
+
+    if (number > 999 && number < 10000)
+    {
+        d4 = number % 10;
+        temp = number / 10;
+
+        d3 = temp % 10;
+        temp = temp / 10;
+
+        d2 = temp % 10;
+        temp = temp / 10;
+
+        d1 = temp % 10;
+        temp = temp / 10;
+
+        cout << d2 << d1 << d4 << d3 << "\n";
+    }
+    else
+    {
+        cout << "Incorrect input\n";
+    }
+
+}
+
+void task3()
+{
+    
+    int n1, n2, n3, n4, n5, n6, n7, winner;
+    winner = 0;
+
+    cout << "Enter a 7 numbers to find out which is the largest\n";
+
+    cout << "Number 1: ";
+    cin >> n1;
+    winner = n1;
+
+    cout << "Number 2: ";
+    cin >> n2;
+    n2 > winner ? winner = n2 : n2;
+ 
+    cout << "Number 3: ";
+    cin >> n3;
+    n3 > winner ? winner = n3 : n3;
+
+    cout << "Number 4: ";
+    cin >> n4;
+    n4 > winner ? winner = n4 : n4;
+
+    cout << "Number 5: ";
+    cin >> n5;
+    n5 > winner ? winner = n5  : n5;
+
+    cout << "Number 6: ";
+    cin >> n6;
+    n6 > winner ? winner = n6 : n6;
+
+    cout << "Number 7: ";
+    cin >> n7;
+    n7 > winner ? winner = n7 : n7;
+
+    cout << "The biggest number is: " << winner << "\n";
+
+}
+
+void task4()
+{ 
+    int tank, distanceAB, distanceBC, cargoWeight, fuelUsage, fuel, fuel2, fuelLeft;
+    tank = 300;
+    cargoWeight = 0;
+    fuelUsage = 1;
+
+    cout << "Enter A-B distance: ";
+    cin >> distanceAB;
+    cout << "Enter B-C distance: ";
+    cin >> distanceBC;
+    cout << "Enter cargo weight: ";
+    cin >> cargoWeight;
+
+    if (cargoWeight > 2000)
+    {
+        cout << "Flight is impossible: overweight\n";
+    }
+    else if (cargoWeight < 500)
+    {
+        fuelUsage = 1;
+    }
+    else if (cargoWeight >= 500 and cargoWeight < 1000)
+    {
+        fuelUsage = 4;
+    }
+    else if (cargoWeight >= 1000 and cargoWeight < 1500)
+    {
+        fuelUsage = 7;
+    }
+    else if (cargoWeight >= 1500 and cargoWeight < 2000)
+    {
+        fuelUsage = 9;
+    }
+
+    fuel = fuelUsage * distanceAB;
+    fuel2 = fuelUsage * distanceBC;
+    fuelLeft = tank - fuel;
+
+    if (fuel > tank)
+    {
+        cout << "Flight is impossible: not enough fuel for A-B leg\n";
+    }
+    else if (fuel <= tank)
+    {
+        cout << "First flight will take " << fuel << " liters of fuel to get to B. There is " << tank - fuel << " liters left\n";
+        
+        if (fuel2 <= fuelLeft)
+        {
+            cout << "Second flight will take " << fuel2 << " liters, no refueling needed\n";
+        }
+        else if (fuelLeft < fuel2)
+        {
+            cout << "Not enough fuel for B-C leg, need at least " << fuel2 << " liters." << " Minimal refueling: " << fuel2 - fuelLeft << "liters\n";
+            if (fuel2 - fuelLeft > tank)
+            {
+                cout << "Flight is impossible: the tank is too small\n";
+            }
+        }
+    }
+}
+
+//void task5()
+//{
+//
+//}
+
+int main()
+{
+    int choice;
+    cout << "Input the task number: \n";
+    cout << "1. Lucky number\n";
+    cout << "2. Pair shuffle\n";
+    cout << "3. Largest of seven\n";
+    cout << "4. Plane fuel\n";
+    //cout << "5. Investment\n";
+    cout << "0. Exit\n";
+    cout << "Your choice: ";
+    cin >> choice;
+    cout << "\n";
+
+    if (choice == 1)
+    {
+        task1();
+        cout << "\n";
+        main();
+    }
+    else if (choice == 2)
+    {
+        task2();
+        cout << "\n";
+        main();
+    }
+    else if (choice == 3)
+    {
+        task3();
+        cout << "\n";
+        main();
+    }
+    else if (choice == 4)
+    {
+        task4();
+        cout << "\n";
+        main();
+    }
+    //else if (choice == 5)
+    //{
+    //    task5();
+    //    cout << "\n";
+    //    main();
+    //}
+    else if (choice == 0)
+    {
+        return 0;
+    }
+
+}
