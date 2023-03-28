@@ -1,0 +1,138 @@
+#include <iostream>
+using namespace std;
+
+void task1()
+{
+    int seconds, minutes, hours;
+    
+    cout << "Enter time in seconds: \n";
+    cin >> seconds;
+
+    minutes = seconds / 60;
+    seconds = seconds % 60;
+
+    hours = minutes / 60;
+    minutes = minutes % 60;
+
+    cout << "Total time is " << hours << ":" << minutes << ":" << seconds << "\n";
+}
+
+void task2()
+{
+    double value;
+    int dollars, cents;
+
+    cout << "Enter the money amount: \n";
+    cin >> value;
+
+    dollars = value; 
+    cents = (value - dollars) * 100;
+    cout << "That's " << dollars << " and " << cents << " cents" << "\n";
+
+}
+
+void task3()
+{
+    int days, weeks;
+
+    cout << "Enter the amount of days: \n";
+    cin >> days;
+
+    weeks = days / 7;
+    days = days % 7;
+    cout << "It is " << weeks << " weeks" << " and " << days << " days" << "\n";
+
+}
+
+void task4()
+{
+    int distance, minutes, seconds;
+    double time, speed;
+
+    cout << "Calculating running speed";
+    cout << "Enter the distance lenght (meters) = ";
+    cin >> distance;
+
+    cout << "Enter time(min.sec) = ";
+    cin >> time;
+
+    minutes = time;
+    seconds = (time - minutes) * 100;
+    time = (minutes * 60) + seconds;
+    speed = distance / time * 3.6;
+
+    cout << "Distance: " << distance << "m \n";
+    cout << "Time : " << minutes << " min " << seconds << "sec = " << time << " sec\n";
+    cout << "You were running at " << speed << " km / h\n";
+}
+
+void task5()
+{
+    int investment;
+    float rate, monthlyPayment;
+    
+    rate = 0.10;
+
+    cout << "Enter the money amount: ";
+    cin >> investment;
+
+    cout << "Enter the annual growth rate (%): ";
+    cin >> rate;
+
+    monthlyPayment = (investment * (rate /100)) / 12;
+
+    cout << "Balance: " << investment << " euros\n";
+    cout << "Annual rate: " << rate << "%\n";
+    cout << "Monthly payment: " << monthlyPayment << " euros\n";
+}
+
+int main()
+{
+    int choice;
+    cout << "Input the task number: \n";
+    cout << "1. Time\n";
+    cout << "2. Currency\n";
+    cout << "3. Dates\n";
+    cout << "4. Running speed\n";
+    cout << "5. Investment\n";
+    cout << "0. Exit\n";
+    cout << "Your choice: ";
+    cin >> choice;
+    cout << "\n";
+
+    if (choice == 1)
+    {
+        task1();
+        cout << "\n";
+        main();
+    }
+    else if (choice == 2)
+    {
+        task2();
+        cout << "\n";
+        main();
+    }
+    else if (choice == 3)
+    {
+        task3();
+        cout << "\n";
+        main();
+    }
+    else if (choice == 4)
+    {
+        task4();
+        cout << "\n";
+        main();
+    }
+    else if (choice == 5)
+    {
+        task5();
+        cout << "\n";
+        main();
+    }
+    else if (choice == 0)
+    {
+        return 0;
+    }
+
+}
