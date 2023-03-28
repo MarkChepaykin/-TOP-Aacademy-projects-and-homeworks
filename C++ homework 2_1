@@ -1,0 +1,88 @@
+#define _USE_MATH_DEFINES
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+
+void task1()
+{
+    double R1, R2, R3;
+
+
+    cout << "Enter R1 resistance: ";
+    cin >> R1;
+
+    cout << "Enter R2 resistance: ";
+    cin >> R2;
+
+    cout << "Enter R3 resistance: ";
+    cin >> R3;
+
+    double R0 = 1 / R1 + 1 / R2 + 1 / R3;
+
+    cout << "R0 resistance equals: " << R0 << "\n";
+}
+
+void task2()
+{
+    double S, L, R;
+    cout << "Enter the circumference: \n";
+    cin >> L;
+
+    R = L / (2 * M_PI);
+    S = M_PI * R * R;
+
+    cout << "Circle area equals to: " << S << "\n";
+}
+
+void task3()
+{
+    double S, v, t, a;
+
+    cout << "Input the velocity: ";
+    cin >> v;
+    cout << "Input the time: ";
+    cin >> t;
+    cout << "Input the acceleration: ";
+    cin >> a;
+
+    S = v * t + (a * t * t) / 2;
+
+    cout << "The distance traveled is: " << S << "\n";
+}
+
+int main()
+{
+    int choice;
+    cout << "Input the task number: \n";
+    cout << "1. Resistances\n";
+    cout << "2. Circle area\n";
+    cout << "3. Distance traveled\n";
+    cout << "0. Exit\n";
+    cout << "Your choice: ";
+    cin >> choice;
+    cout << "\n";
+
+    if (choice == 1)
+    {
+        task1();
+        cout << "\n";
+        main();
+    }
+    else if (choice == 2)
+    {
+        task2();
+        cout << "\n";
+        main();
+    }
+    else if (choice == 3)
+    {
+        task3();
+        cout << "\n";
+        main();
+    }
+    else if (choice == 0)
+    {
+        return 0;
+    }
+}
