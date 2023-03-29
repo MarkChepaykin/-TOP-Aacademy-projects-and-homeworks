@@ -1,0 +1,145 @@
+#include <iostream>
+using namespace std;
+
+void task1()
+{
+    //    Задание 1.
+    //    Пользователь с клавиатуры вводит 5 оценок студента. 
+    //    Определить, допущен ли студент к экзамену.
+    //    Студент получает допуск, если его средний балл 4 балла и выше.
+
+    int g1, g2, g3, g4, g5, average;
+
+    cout << "Enter five grades (1-5): \n" << "Grade #1: ";
+    cin >> g1;
+    cout << "Grade #2: ";
+    cin >> g2;
+    cout << "Grade #3: ";
+    cin >> g3;
+    cout << "Grade #4: ";
+    cin >> g4;
+    cout << "Grade #5: ";
+    cin >> g5;
+
+    average = (g1 + g2 + g3 + g4 + g5) / 5;
+
+    if (average > 5 or average < 1)
+    {
+        cout << "Wrong input, try again\n";
+    }
+    else if (average >= 4)
+    {;
+        cout << "Grade passed, student is allowed to take the exam\n";
+    }
+    else
+    {
+        cout << "Grade failed, student is not allowed to take the exam\n";
+    }
+}
+
+void task2()
+{
+    // Задание 2. 
+    // Пользователь вводит с клавиатуры число.
+    // Если оно четное, умножить его на три, иначе — поделить на два.
+    // Результат вывести на экран
+    
+    int number;
+    double result;
+
+    cout << "Enter a number: ";
+    cin >> number;
+
+    if (number % 2) 
+    {
+        cout << number << " times 3 = " << number * 3 << "\n";
+    }
+    else
+    {
+        cout << number << " divided by 2 = " << number / 2 << "\n";
+    }
+
+}
+
+void task3()
+{
+    //Задание 3. Написать программу - калькулятор.Пользователь
+    //    вводит два числа и выбирает арифметическое действие.
+    //    Вывести на экран результат.
+
+    double firstNumber, secondNumber;
+    int operation = 0;
+
+
+    cout << "Enter a number: ";
+    cin >> firstNumber;
+
+    cout << "Enter a number: ";
+    cin >> secondNumber;
+
+    cout << "Choose an operation (enter a number): \n";
+    cout << "1. Addition ( + ) \n";
+    cout << "2. Substraction ( - ) \n";
+    cout << "3. Multipliction ( * ) \n";
+    cout << "4. Division ( / ) \n";
+    cin >> operation;
+
+    cout << "The result is: ";
+    switch (operation) {
+    case 1:
+        cout << firstNumber + secondNumber << "\n";
+        break;
+    case 2:
+        cout << firstNumber - secondNumber << "\n";
+        break;
+    case 3:
+        cout << firstNumber * secondNumber << "\n";
+        break;
+    case 4:
+        if(secondNumber == 0)
+        {
+            cout << "Can't divide by zero";
+        }
+        else cout << firstNumber / secondNumber << "\n";
+        break;
+    default:
+        cout << "Wrong input \n";
+    }
+}
+
+
+int main()
+{
+    int choice;
+    cout << "Input the task number: \n";
+    cout << "1. Student grade \n";
+    cout << "2. Even or odd \n";
+    cout << "3. Calculator \n";
+    cout << "0. Exit\n";
+    cout << "Your choice: ";
+    cin >> choice;
+    cout << "\n";
+
+    if (choice == 1)
+    {
+        task1();
+        cout << "\n";
+        main();
+    }
+    else if (choice == 2)
+    {
+        task2();
+        cout << "\n";
+        main();
+    }
+    else if (choice == 3)
+    {
+        task3();
+        cout << "\n";
+        main();
+    }
+    else if (choice == 0)
+    {
+        return 0;
+    }
+}
