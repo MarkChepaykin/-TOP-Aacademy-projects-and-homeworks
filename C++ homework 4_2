@@ -1,0 +1,235 @@
+#include <iostream>
+using namespace std;
+
+int pizzaCount = 0;
+int drinkCount = 0;
+float pizzaPrice = 0;
+float drinkPrice = 0;
+int freePizza = 0;
+float Pepperoni = 10, Prosciutto = 12.50, Margherrita = 8.75, Diabola = 13, Water = 1, Cola = 2.50, Juice = 3, total;
+int pepperoni, prosciutto, margherrita, diabola, water, cola, juice;
+
+float pizzaChoice()
+{
+    int pizza;
+    char extra;
+   
+    cout << "Choose your pizza: (1-4): ";
+    cin >> pizza;
+
+    switch (pizza)
+    {
+    case 1: pizzaPrice += Pepperoni;
+        pizzaCount++;
+        pepperoni++;
+        break;
+    case 2: pizzaPrice += Prosciutto;
+        pizzaCount++;
+        prosciutto++;
+        break;
+    case 3: pizzaPrice += Margherrita;
+        pizzaCount++;
+        margherrita++;
+        break;
+    case 4: pizzaPrice += Diabola;
+        pizzaCount++;
+        diabola++;
+        break;
+    case'x': cout << "Congratulations, the 5th pizza is free!\n";
+        break;
+    default:
+        cout << "Wrong input, try again\n";
+        pizzaPrice = 0;
+        pizzaChoice();
+    }
+
+    if (pizzaCount == 5)
+    {
+        cout << "Congratulations, the 5th pizza is free!\n";
+        pizzaPrice -= min(Pepperoni, min(Prosciutto, min(Margherrita, Diabola)));
+        freePizza = 1;
+    }
+
+    
+    cout << "More pizza? (y/n): ";
+    cin >> extra;
+    switch (extra)
+    {
+    case 'y':
+    case 'Y':
+        pizzaChoice();
+        break;
+    default:
+        cout << "No more pizza.\n\n";
+        break;
+    }
+
+    return pizzaPrice;
+}
+
+float drinkChoice()
+{
+    int drink;
+    char extra;
+
+    cout << "Choose your drink: (1-3): ";
+    cin >> drink;
+
+    switch (drink)
+    {
+    case 1: drinkPrice += Water;
+        drinkCount++;
+        water++;
+        break;
+    case 2: drinkPrice += Cola;
+        drinkCount++;
+        cola++;
+        break;
+    case 3: drinkPrice += Juice;
+        drinkCount++;
+        juice++;
+        break;
+    default:
+        cout << "Wrong input, try again\n";
+        drinkPrice = 0;
+        drinkChoice();
+    }
+
+    cout << "More drinks? (y/n): ";
+    cin >> extra;
+    switch (extra)
+    {
+    case 'y':
+    case 'Y':
+        drinkChoice();
+        break;
+    default:
+        cout << "No more drinks.\n\n";
+        break;
+    }
+
+    return drinkPrice;
+}
+
+void task1()
+{
+    float totalDiscount = 0;
+    total = 0;
+
+    cout << "Welcome to Pizzeria Del Marco!\nMENU\n\nPIZZA:\n\t1. Pepperoni - 10$\n\t2. Prosciutto - 12.50$\n\t3. Margherrita - 8.75$\n\t4. Diabola - 13$\n";
+    cout << "DRINKS\n\t1. Water - 1$\n\t2. Cola - 2.50$\n\t3. Juice - 3$\n\n"; 
+
+    total = pizzaChoice() + drinkChoice();
+
+    cout << "\tReceipt: \n";
+    if (pepperoni > 0) { cout << "\tPeperoni - QTY - " << pepperoni << " - PRICE - " << Pepperoni * pepperoni << "$ \n"; }
+    if (prosciutto > 0) { cout << "\tProsciutto - QTY - " << prosciutto << " - PRICE - " << Prosciutto * prosciutto << "$ \n"; }
+    if (margherrita > 0) { cout << "\tMargherrita - QTY - " << margherrita << " - PRICE - " << Margherrita * margherrita << "$ \n"; }
+    if (diabola > 0) { cout << "\tDiabola - QTY - " << diabola << " - PRICE - " << Diabola * diabola << "$ \n"; }
+    if (water > 0) { cout << "\tWater - QTY - " << water << " - PRICE - " << Water * water << "$ \n"; }
+    if (cola > 0) { cout << "\tCola - QTY - " << cola << " - PRICE - " << Cola * cola << "$ \n"; }
+    if (juice > 0) { cout << "\tJuice - QTY - " << juice << " - PRICE - " << Juice * juice << "$ \n"; }
+
+    cout << "\tPizzas: " << pizzaCount << "\n";
+    cout << "\tDrinks: " << drinkCount << "\n";
+    if (freePizza == 1) { cout << "\tOne pizza for free discount\n"; }
+    if (drinkCount >= 3) {
+        float discount = ((Cola * cola) + (Juice * juice)) * 0.15;
+        cout << "\tDrink discount: " << discount << "$ \n";
+        total -= discount;
+    }
+    if (total >= 50) {
+    float totalDiscount = total * 0.2;
+    cout << "\tDiscount: " << totalDiscount << "$ \n";
+    total = total * 0.8;
+    }
+    cout << "\tTotal: " << total << "$ \n";
+}
+
+float comCalc(float sales) {
+
+    if (sales > 0 and sales < 500)
+    {
+        sales *= 0.03;
+    }
+    else if (sales > 500 and sales < 1000) {
+        sales *= 0.05;
+    }
+    else if (sales > 1000) {
+        sales *= 0.08;
+    }
+    
+    return sales;
+}
+
+void task2()
+{
+    //    Зарплата менеджера составляет 200$ + процент от продаж,
+    //    продажи до 500$ — 3 %, от 500 до 1000 — 5 %, свыше 8 % .
+    //    Пользователь вводит с клавиатуры уровень продаж для трех менеджеров.
+    //    Определить их зарплату, определить лучшего менеджера, начислить ему премию 200$, вывести итоги на экран.
+    //    Примечание: уровень продаж у всех трех менеджеров разный.
+
+    int salary = 200;
+    int commission = 0;
+    float sales1, sales2, sales3, tsal1, tsal2, tsal3;
+    int bestManager = 0;
+    float bestSale = 0;
+
+    cout << "Enter the sales for each manager: \n" << "Manager 1: ";
+    cin >> sales1;
+
+    cout << "Manager 2: ";
+    cin >> sales2;
+
+    cout << "Manager 3: ";
+    cin >> sales3;
+
+    if (sales1 > bestSale) { bestManager = 1; bestSale = sales1; }
+    if (sales2 > bestSale) { bestManager = 2; bestSale = sales2; }
+    if (sales3 > bestSale) { bestManager = 3; bestSale = sales3; }
+
+    cout << "Best salesman is manager #" << bestManager << ", he receives a 200$ bonus;\n";
+
+    tsal1 = salary + comCalc(sales1);
+    tsal2 = salary + comCalc(sales2);
+    tsal3 = salary + comCalc(sales3);
+
+    if (bestManager == 1) { tsal1 += 200; }
+    if (bestManager == 2) { tsal2 += 200; }
+    if (bestManager == 3) { tsal3 += 200; }
+
+    cout << "Manager 1 salary is: " << tsal1 << "$\n";
+    cout << "Manager 2 salary is: " << tsal2 << "$\n";
+    cout << "Manager 3 salary is: " << tsal3 << "$\n";
+}
+
+int main()
+{
+    int choice;
+    cout << "Input the task number: \n";
+    cout << "1. Pizzeria Del Marco\n";
+    cout << "2. Workers salary\n";
+    cout << "0. Exit\n";
+    cout << "Your choice: ";
+    cin >> choice;
+    cout << "\n";
+
+    if (choice == 1)
+    {
+        task1();
+        cout << "\n";
+        main();
+    }
+    else if (choice == 2)
+    {
+        task2();
+        cout << "\n";
+        main();
+    }
+    else if (choice == 0)
+    {
+        return 0;
+    }
+
+}
