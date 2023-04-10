@@ -1,0 +1,143 @@
+#include <iostream>
+using namespace std;
+
+void task1()
+{
+    int a, i, sum = 0;
+    cout << "Enter a starting point (0-499)";
+    cin >> a;
+
+    i = a;
+
+    if (i >= 0 and i <= 500) {
+        while (i <= 500) {
+            sum += i;
+            i++;
+            cout << sum << "\n";
+        }
+    }
+    else {
+        cout << "Out of bounds\n";
+    }
+}
+
+void task2()
+{
+    int x, y, i;
+    float power = 1;
+    cout << "Enter x value: ";
+    cin >> x;
+    cout << "Enter y value: ";
+    cin >> y;
+
+    if (y == 0) { power = 1; }
+    else {
+        i = 1;
+        while (i <= abs(y)) {
+            power *= x;
+            i++;
+        }
+        if (y < 0) {
+            power /= 1;
+        }
+    }
+
+    cout << power;
+}
+
+void task3()
+{
+    int a = 1, b = 1000, i = 0, sum = 0, avg;
+    cout << "Average of all numbers from 1 to 1000\n";
+
+    while (i <= 1000) {
+        sum += i;
+        i++;
+    }
+    avg = sum / b;
+    cout << avg;
+}
+
+void task4()
+{
+    unsigned long long a, i, product = 1;
+    cout << "Enter a starting point (1-20)";
+    cin >> a;
+
+    i = a;
+
+    if (i >= 1 and i <= 20) {
+        while (i <= 21) {
+            product *= i;
+            i++;
+            cout << product << "\n";
+        }
+    }
+    else {
+        cout << "Out of bounds\n";
+    }
+}
+
+void task5()
+{
+    int k, i = 1, product;
+    cout << "Enter a multiplier: ";
+    cin >> k;
+
+    while (i > 0 and i < 10) {
+        product = k * i;
+        i++;
+        cout << product << "\n";
+    }
+}
+
+int main()
+{
+    int choice;
+    cout << "Input the task number: \n";
+    cout << "1. Sum\n";
+    cout << "2. X to the power of Y\n";
+    cout << "3. Average\n";
+    cout << "4. Product\n";
+    cout << "5. Multiplication table\n";
+    cout << "0. Exit\n";
+    cout << "Your choice: ";
+    cin >> choice;
+    cout << "\n";
+
+    if (choice == 1)
+    {
+        task1();
+        cout << "\n";
+        main();
+    }
+    else if (choice == 2)
+    {
+        task2();
+        cout << "\n";
+        main();
+    }
+    else if (choice == 3)
+    {
+        task3();
+        cout << "\n";
+        main();
+    }
+    else if (choice == 4)
+    {
+        task4();
+        cout << "\n";
+        main();
+    }
+    else if (choice == 5)
+    {
+        task5();
+        cout << "\n";
+        main();
+    }
+    else if (choice == 0)
+    {
+        return 0;
+    }
+
+}
