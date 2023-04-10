@@ -1,0 +1,177 @@
+#include <iostream>
+using namespace std;
+
+void task1()
+{
+    int num1, num2, num3, same, resN = 0, temp;
+
+    for (int i = 100; i <= 999; i++)
+    {
+        same = 0;
+        num3 = i % 10;
+        temp = i / 10;
+        num2 = temp % 10;
+        num1 = temp / 10;
+
+        if ((num1 == num2) and (num1 != num3) and (num2 != num3)) { same++; }
+        if ((num1 != num2) and (num1 == num3) and (num2 != num3)) { same++; }
+        if ((num1 != num2) and (num1 != num3) and (num2 == num3)) { same++; }
+        if (same == 1) { cout << i << "\n"; resN++; }
+    }
+
+    cout << "# of numbers with 2 identical digits: " << resN;
+}
+
+void task2()
+{
+    int num1, num2, num3, resN = 0, temp;
+
+    for (int i = 100; i <= 999; i++)
+    {
+        num3 = i % 10;
+        temp = i / 10;
+        num2 = temp % 10;
+        num1 = temp / 10;
+
+        if ((num1 != num2) and (num1 != num3) and (num2 != num3)) { resN++; }
+    }
+
+    cout << "# of numbers with different digits: " << resN;
+
+}
+
+void task3()
+{
+    int num, digit, i = 0, newNum = 0;
+
+    cout << "Enter a number: ";
+    cin >> num;
+
+    while (num > 0) {
+        digit = num % 10;
+        if ((digit != 3) and (digit != 6))
+        {
+            newNum = newNum + digit * pow(10, i);
+            i++;
+        }
+        num = num / 10;
+    }
+    cout << "New number: " << newNum;
+
+}
+
+void task4()
+{
+    int A, B;
+
+    cout << "Enter a number: ";
+    cin >> A;
+    
+    for (int i = A - 1; i > 1; i--) {
+        B = i;
+        if ((A % (B * B)) == 0 and (A % (B*B*B) != 0)){
+            cout << B << "\n";
+        }
+    }
+
+
+}
+
+void task5()
+{
+    int A, sum = 0, temp;
+    cout << "Enter a number: ";
+    cin >> A;
+    temp = A;
+
+    while (temp > 0) {
+        sum += temp % 10;
+        temp /= 10;
+    }
+
+    int cube = sum * sum * sum;
+    int square = A * A;
+
+    cout << "Digit sum: " << sum << endl;
+    cout << "Sum cubed: " << cube << endl;
+    cout << "A squared: " << square << endl;
+
+    if (cube == square) { cout << "Cube of the digit sum is: " << square << "\n"; }
+    else {cout << "Cube of the digit sum does not equal to " << square << "\n";}
+}
+
+void task6()
+{
+    int number;
+    cout << "Enter a number: ";
+    cin >> number;
+
+    for (int i = number; i > 1; i--) {
+        if (number % i == 0) {
+            cout << i << "\n";
+        }
+
+    }
+
+}
+
+void task7()
+{
+    int A, B, num1, num2;
+    cout << "Enter number A: ";
+    cin >> A;
+    cout << "Enter number B: ";
+    cin >> B;
+
+    num1 = A;
+    num2 = B;
+
+    if (A < B) { swap(num1, num2); }
+    
+    for (int i = num1; i > 0; i--) {
+        if (num1 % i == 0 and num2 % i == 0) {
+            cout << i << "\n";
+        }
+    }
+}
+
+
+int main()
+{
+    int choice;
+    cout << "\n\nChoose a task:\n";
+    cout << "1. Task 1\n";
+    cout << "2. Task 2\n";
+    cout << "3. Task 3\n";
+    cout << "4. Task 4\n";
+    cout << "5. Task 5\n";
+    cout << "6. Task 6\n";
+    cout << "7. Task 7\n";
+    cout << "0. Exit\n";
+    cout << "Your choice: ";
+
+    while (true)
+    {
+        cin >> choice;
+        cout << "\n";
+        switch (choice) {
+        case 0: return 0;
+            break;
+        case 1: task1(); main();
+            break;
+        case 2: task2(); main();
+            break;
+        case 3: task3(); main();
+            break;
+        case 4: task4(); main();
+            break;
+        case 5: task5(); main();
+            break;
+        case 6: task6(); main();
+            break;
+        case 7: task7(); main();
+            break;
+        default: cout << "Wrong input. Try again.\n";
+        }
+    }
+}
