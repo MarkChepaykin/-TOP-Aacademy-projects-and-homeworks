@@ -1,0 +1,198 @@
+#include <iostream>
+#include <stdlib.h> 
+#include"time.h"
+
+using namespace std;
+
+void task1()
+{   
+
+    const int lenght = 10;
+    int arr[lenght], max = arr[0], min = arr[0];
+    srand(time(NULL));
+
+    for (int i = 0; i < lenght; i++)
+    {
+        arr[i] = rand();
+        cout << arr[i] << "\t";
+
+    }
+    
+    for (int j = 0; j < lenght; j++)
+    {
+        if (arr[j] > max) {
+            max = arr[j];
+        }
+        if (arr[j] < min) {
+            min = arr[j];
+        }
+
+    }
+
+    cout << "\nThe biggest number is: " << max;
+    cout << "\nThe smallest number is: " << min;
+
+}
+
+void task2()
+{
+    const int lenght = 10;
+    int arr[lenght], start, end, sum, point;
+    srand(time(NULL));
+
+    cout << "\n The starting point:  ";
+    cin >> start; 
+    cout << "\n The end point:  ";
+    cin >> end;
+    cout << "\n The point:  ";
+    cin >> point;
+
+
+    for (int i = 0; i < lenght; i++)
+    {
+        arr[i] = start + rand() % (end - start);
+
+    }
+    sum = 0;
+    for (int i = 0; i < lenght; i++)
+    {
+        if (arr[i] < point)
+        {
+            sum = sum + arr[i];
+        }
+    }
+    cout << sum;
+}
+
+void task3()
+{
+    int const length = 12;
+    int profit[length], start, end, value, max = 0, min = 0;
+
+    for (int i = 0; i < length; i++)
+    {
+        cout << "Enter profit value for month " << i + 1 << ": ";
+        cin >> value;
+        profit[i] = value;
+    }
+
+    for (int i = 0; i < length; i++)
+    {
+        cout << profit[i] << "\t";
+    }
+
+    cout << "\nStarting month: ";
+    cin >> start;
+    cout << "End month: ";
+    cin >> end;
+
+    for (int i = (start); i <= (end-1); i++)
+    {
+        if (profit[i] > profit[max]) {
+            max = i;
+        }
+        if (profit[i] < profit[min]) {
+            min = i;
+        }
+
+    }
+    cout << "\nMost profitable month is: " << max +1;
+    cout << "\nLeast profitable month is: " << min +1;
+}
+
+void task4()
+{
+
+    const int N = 10;
+    double arr[N] = { 2.1, -1.5, 3.0, -4.2, 5.7, -6.8, 7.9, 8.0, 9.2, -2.3 };
+
+    for (int i = 0; i < N; i++)
+    {
+        cout << arr[i] << "\t";
+    }
+
+    double sum_negative = 0;
+    for (int i = 0; i < N; i++) {
+        if (arr[i] < 0) {
+            sum_negative += arr[i];
+        }
+    }
+    cout << "\nNegative element sum: " << sum_negative << "\n";
+
+    int index_min = 0, index_max = 0;
+    for (int i = 1; i < N; i++) {
+        if (arr[i] < arr[index_min]) {
+            index_min = i;
+        }
+        if (arr[i] > arr[index_max]) {
+            index_max = i;
+        }
+    }
+
+    if (index_min > index_max) {
+        swap(index_min, index_max);
+    }
+
+    double prod_min_max = 1;
+    for (int i = index_min + 1; i < index_max; i++) {
+        prod_min_max *= arr[i];
+    }
+    cout << "Product between min and max: " << prod_min_max << "\n";
+
+    double prod_even = 1;
+    for (int i = 0; i < N; i += 2) {
+        prod_even *= arr[i];
+    }
+    cout << "Product between even numbers: " << prod_even << endl;
+
+    int first_negative = -1, last_negative = -1;
+    for (int i = 0; i < N; i++) {
+        if (arr[i] < 0) {
+            if (first_negative == -1) {
+                first_negative = i;
+            }
+            last_negative = i;
+        }
+    }
+
+    double flsum = 0;
+    for (int i = first_negative + 1; i < last_negative; i++) {
+        flsum += arr[i];
+    }
+    cout << "Sum between first and last negative: " << flsum << "\n";
+
+}
+
+int main()
+{
+    int choice;
+    cout << "\n\nChoose a task:\n";
+    cout << "1. Task 1\n";
+    cout << "2. Task 2\n";
+    cout << "3. Task 3\n";
+    cout << "4. Task 4\n";
+    cout << "5. Task 5\n";
+    cout << "6. Task 6\n";
+    cout << "7. Task 7\n";
+    cout << "0. Exit\n";
+    cout << "Your choice: ";
+
+    while (true)
+    {
+        cin >> choice;
+        cout << "\n";
+        switch (choice) {
+        case 0: return 0;
+            break;
+        case 1: task1(); main();
+            break;
+        case 2: task2(); main();
+            break;
+        case 3: task3(); main();
+            break;
+        case 4: task4(); main();
+            break;
+        default: cout << "Wrong input. Try again.\n";
+        }
+    }
+}
