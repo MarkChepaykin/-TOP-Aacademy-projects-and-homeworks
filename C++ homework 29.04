@@ -1,0 +1,78 @@
+#include <time.h>
+#include <iostream>
+#include <stdlib.h>
+
+using namespace std;
+
+int main()
+{
+
+    const int row1 = 3, column1 = 2, row2 = 2, column2 = 3;
+    srand(time(NULL));
+
+	int array1[column1][row1];
+	int array2[column2][row2];
+	int result[column1][row2];
+
+	for (int i = 0; i < column1; i++)
+	{
+		for (int j = 0; j < row1; j++)
+		{
+			array1[i][j] = rand() % 10;
+		}
+	}
+
+	for (int i = 0; i < column1; i++)
+	{
+		for (int j = 0; j < row1; j++)
+		{
+			cout << array1[i][j] << "\t";
+		}
+		cout << "\n";
+	}
+
+	cout << "\nMultiplied by \n\n";
+
+	for (int i = 0; i < column2; i++)
+	{
+		for (int j = 0; j < row2; j++)
+		{
+			array2[i][j] = rand() % 10;
+		}
+	}
+
+	for (int i = 0; i < column2; i++)
+	{
+		for (int j = 0; j < row2; j++)
+		{
+			cout << array2[i][j] << "\t";
+		}
+		cout << "\n";
+	}
+
+	cout << "\nEquals \n\n";
+
+	for (int i = 0; i < column1; i++)
+	{
+		for (int j = 0; j < row2; j++)
+		{
+			int product = 0;
+			for (int k = 0; k < column2; k++)
+			{
+				product +=	array1[i][k] * array2[k][j];
+			}
+			result[i][j] = product;	
+		}
+	}
+
+	for (int i = 0; i < column1; i++)
+	{
+		for (int j = 0; j < row2; j++)
+		{
+			cout << result[i][j] << "\t";
+		}
+		cout << endl;
+	}
+
+}
+
