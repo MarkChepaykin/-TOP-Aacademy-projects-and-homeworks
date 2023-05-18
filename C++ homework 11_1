@@ -1,0 +1,212 @@
+#include <iostream>
+using namespace std;
+
+string suit[4] = { "Clubs", "Hearts", "Spades", "Diamonds" };
+string face[13] = { "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King", "Ace" };
+int s, f;
+
+int power(int base, int exponent)
+{
+    /*
+    Написать функцию, которая принимает два
+    параметра : основание степени и показатель
+    степени, и вычисляет степень числа на основе 
+    полученных данных.
+    */
+
+    int result = pow(base, exponent);
+    return result;
+}
+
+int numbersSum(int first, int last)
+{
+    int result = 0;
+    if (first > last) swap(first, last);
+
+    if (first == last) cout << "The numbers are the same";
+    
+    else
+    {
+        for (int i = first; i <= last; i++)
+        {
+            result += i;
+        }
+    }
+
+    return result;
+}
+
+bool isPerfect(int num)
+{
+    int sum = 0;
+    for (int i = 1; i < num; i++)
+    {
+        if (num % i == 0)
+        {
+            sum += i;
+        }
+    }
+
+    if (sum == num) return true;
+    else return false;
+
+}
+
+void perfectFinder(int a, int b)
+{
+    for (int i = a; i <= b; i++)
+    {
+        if (isPerfect(i)) cout << i << "\n";
+    }
+}
+
+void card(int suitIndex, int faceIndex) {
+
+    if (s <= 4 || s > 0 || f <= 13 || f > 0) {
+        cout << "You have chosen the " << face[faceIndex - 1] << " of " << suit[suitIndex - 1] << "\n";
+    }
+    else
+    {
+        "Wrong input. Try again.\n";
+    }
+}
+
+bool lucky(int num) {
+
+    int sum1 = 0, sum2 = 0;
+    for (int i = 0; i < 3; i++)
+    {
+        sum1 += num % 10;
+        num /= 10;
+    }
+    for (int i = 0; i < 3; i++)
+    {
+        sum2 += num % 10;
+        num /= 10;
+    }
+
+    return sum1 == sum2;
+    if (sum1 == sum2)
+    {
+        cout << "lucky!\n";
+    }
+    else
+    {
+        cout << "unlucky..\n";
+    }
+}
+
+void task1()
+{
+    int base, exponent;
+    cout << "Enter base number: ";
+    cin >> base;
+    cout << "Enter exponent: ";
+    cin >> exponent;
+    cout << power(base, exponent);
+}
+
+void task2()
+{
+    int first, last;
+    cout << "Enter the first number: ";
+    cin >> first;
+    cout << "Enter the last number: ";
+    cin >> last;
+    cout << numbersSum(first, last);
+}
+
+void task3()
+{
+    int a, b;
+    cout << "Enter the first number: ";
+    cin >> a;
+    cout << "Enter the last number: ";
+    cin >> b;
+    
+    perfectFinder(a, b);
+
+}
+
+void task4()
+{
+    
+    for (int i = 0; i < 4; i++)
+    {
+        cout << i + 1 << ") " << suit[i] << "\n";
+    }
+    cout << "Choose the card's suit: ";
+    cin >> s;
+    cout << "\n";
+    
+    for (int j = 0; j < 13; j++)
+    {
+        cout << j + 1 << ") " << face[j] << "\n";
+    }
+    cout << "Choose the card's face: ";
+    cin >> f;
+    cout << "\n";
+
+    card(s, f);
+
+}
+
+
+
+void task5()
+{
+    int num;
+    cout << "Enter a 6 digit number to check if it is lucky: ";
+    cin >> num;
+
+    if (num > 99999 && num < 1000000)
+    {
+        cout << "Your number is ";
+        if (lucky(num)) 
+        {
+            cout << "lucky!\n";
+        }
+        else
+        {
+            cout << "unlucky..\n";
+        }
+    }
+    else
+    {
+        cout << "Incorrect input\n";
+    }
+}
+
+int main()
+{
+    int choice;
+    cout << "\n\nChoose a task:\n";
+    cout << "1. Task 1\n";
+    cout << "2. Task 2\n";
+    cout << "3. Task 3\n";
+    cout << "4. Task 4\n";
+    cout << "5. Task 5\n";
+    cout << "0. Exit\n";
+    cout << "Your choice: ";
+
+    while (true)
+    {
+        cin >> choice;
+        cout << "\n";
+        switch (choice) {
+        case 0: return 0;
+            break;
+        case 1: task1(); main();
+            break;
+        case 2: task2(); main();
+            break;
+        case 3: task3(); main();
+            break;
+        case 4: task4(); main();
+            break;
+        case 5: task5(); main();
+            break;
+        default: cout << "Wrong input. Try again.\n";
+        }
+    }
+}
