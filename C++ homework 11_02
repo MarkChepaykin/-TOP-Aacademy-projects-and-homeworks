@@ -1,0 +1,105 @@
+#include <iostream>
+#include <time.h>
+#include <stdlib.h>
+
+using namespace std;
+
+void arrayFill(int array[], int length) 
+{
+    for (int i = 0; i < length; i++)
+    {
+        array[i] = rand() % 10; 
+        cout << array[i] << "\t";
+    }
+    cout << "\n";
+}
+
+void twoDimensionalArrayFill(int array[][5], int length) 
+{
+    for (int i = 0; i < length; i++)
+    {
+        for (int j = 0; j < 5; j++)
+        {
+            array[i][j] = rand() % 31 + 30;
+            cout << array[i][j] << "\t";
+        }
+        cout << "\n";
+    }
+}
+
+void minArrayNum(int array[][5], int length) 
+{
+    int temp = array[0][0];
+
+    for (int i = 0; i < length; i++)
+    {
+        for (int j = 0; j < length; j++)
+        {
+            if (temp > array[i][j]) {
+                temp = array[i][j];
+            }
+        }
+    }
+    cout << "Min number in array is:" << temp << "\n";
+}
+
+void maxArrayNum(int array[][5], int length)
+{
+    int temp = array[0][0];
+
+    for (int i = 0; i < length; i++)
+    {
+        for (int j = 0; j < length; j++)
+        {
+            if (temp < array[i][j]) {
+                temp = array[i][j];
+            }
+        }
+    }
+    cout << "Max number in array is:" << temp << "\n";
+}
+
+void task1()
+{
+    const int length1 = 5, length2 = 10;
+    int array1[length1], array2[length2];
+
+    arrayFill(array1, length1);
+    arrayFill(array2, length2);    
+}
+
+void task2()
+{
+    int array[5][5];
+    twoDimensionalArrayFill(array, 5);
+    minArrayNum(array, 5);
+    maxArrayNum(array, 5);
+}
+
+
+int main()
+{
+    srand(time(NULL));
+
+    int choice;
+    cout << "\n\nChoose a task:\n";
+    cout << "1. Task 1\n";
+    cout << "2. Task 2\n";
+    cout << "0. Exit\n";
+    cout << "Your choice: ";
+
+    while (true)
+    {
+        cin >> choice;
+        cout << "\n";
+        switch (choice) {
+        case 0: return 0;
+            break;
+        case 1: task1(); main();
+            break;
+        case 2: task2(); main();
+            break;
+        default: cout << "Wrong input. Try again.\n";
+        }
+    }
+}
