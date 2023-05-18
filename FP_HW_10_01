@@ -1,0 +1,163 @@
+#include <time.h>
+#include <iostream>
+using namespace std;
+
+
+void task1()
+{
+    const int length = 3;
+    int number, temp;
+    int arr[length][length];
+    
+
+    cout << "\nEnter a number: ";
+    cin >> number;
+
+    arr[0][0] = number;
+
+    temp = number;
+    
+    for (int i = 0; i < length; i++)
+    {
+        for (int j = 0; j < length; j++)
+        {
+            if (i == 0 && j == 0) {
+                arr[i][j] = number;
+            }
+            else {
+                arr[i][j] = temp;
+            }
+            temp *= 2;
+        }
+    }
+
+    for (int i = 0; i < length; i++)
+    {
+        for (int j = 0; j < length; j++)
+        {
+            cout << arr[i][j] << "\t";
+        }
+        cout << endl;
+    }
+}
+
+void task2()
+{
+    const int length = 3;
+    int number, temp;
+    int arr[length][length];
+
+
+    cout << "\nEnter a number: ";
+    cin >> number;
+
+    arr[0][0] = number;
+
+    temp = number;
+
+    for (int i = 0; i < length; i++)
+    {
+        for (int j = 0; j < length; j++)
+        {
+            if (i == 0 && j == 0) {
+                arr[i][j] = number;
+            }
+            else {
+                arr[i][j] = temp;
+            }
+            temp += 1;
+        }
+    }
+
+    for (int i = 0; i < length; i++)
+    {
+        for (int j = 0; j < length; j++)
+        {
+            cout << arr[i][j] << "\t";
+        }
+        cout << endl;
+    }
+}
+
+void task3()
+{
+    const int length = 4;
+    int number;
+    int arr[length][length], secondArr[length][length];
+    srand(time(NULL));
+    
+
+    for (int i = 0; i < length; i++)
+    {
+        for (int j = 0; j < length; j++)
+        {
+            arr[i][j] = rand() % 10;
+        }
+    }
+
+    // pervonachalnyi massive
+    for (int i = 0; i < length; i++)
+    {
+        for (int j = 0; j < length; j++)
+        {
+            cout << arr[i][j] << "\t";
+        }
+        cout << endl;
+    }
+
+    cout << "\nEnter a number: ";
+    cin >> number;
+
+    // vtoroprodolzhennyi massive
+
+
+    for (int i = 0; i < length; i++)
+    {
+        for (int j = 0; j < length; j++) {
+
+            int newpos = 0;
+
+            newpos = (j - number < 0) ? length + (j - number) : (j - number);
+
+            secondArr[i][j] = arr[i][newpos];
+        }
+    }
+
+    for (int i = 0; i < length; i++)
+    {
+        for (int j = 0; j < length; j++)
+        {
+            cout << secondArr[i][j] << "\t";
+        }
+        cout << "\n";
+    }
+}
+
+
+int main()
+{
+    int choice;
+    cout << "\n\nChoose a task:\n";
+    cout << "1. Task 1\n";
+    cout << "2. Task 2\n";
+    cout << "3. Task 3\n";
+    cout << "0. Exit\n";
+    cout << "Your choice: ";
+
+    while (true)
+    {
+        cin >> choice;
+        cout << "\n";
+        switch (choice) {
+        case 0: return 0;
+            break;
+        case 1: task1(); main();
+            break;
+        case 2: task2(); main();
+            break;
+        case 3: task3(); main();
+            break;
+        default: cout << "Wrong input. Try again.\n";
+        }
+    }
+}
