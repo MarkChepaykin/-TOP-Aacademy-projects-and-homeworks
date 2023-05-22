@@ -1,0 +1,121 @@
+#include <iostream>
+#include <time.h>
+#include <stdlib.h>
+#include <algorithm>
+using namespace std;
+
+const int length = 5;
+
+template <typename T> 
+void arrayInit(T array[length][length])
+{
+    for (int i = 0; i < length; i++)
+    {
+        for (int j = 0; j < length; j++)
+        {
+            array[i][j] = rand() % 10 ;
+        }
+    }
+}
+
+template <typename T>
+void arrayOut(T array[length][length])
+{
+    for (int i = 0; i < length; i++)
+    {
+        for (int j = 0; j < length; j++)
+        {
+            cout << int(array[i][j])<< "\t";
+        }
+        cout << "\n\n";
+    }
+}
+
+template <typename T>
+void arrayMinMax(T array[length][length]) {
+
+    T minValue = array[0][0];
+    T maxValue = array[0][0];
+   
+    for (int i = 0; i < length; i++)
+    {
+            if (array[i][i] < minValue) minValue = array[i][i];
+            if (array[i][i] > maxValue) maxValue = array[i][i];
+    }
+    cout << "Min: " << int(minValue) << "\n";
+    cout << "Max: " << int(maxValue) << "\n";
+}
+
+template <typename T>
+void arraySort(T array[length][length])
+{
+    //for (int i = 0; i < length; i++)
+    //{
+    //    sort(array[i], array[i] + length);
+    //}
+
+    for (int i = 0; i < length; i++)
+    {
+        for (int j = 0; j < length - 1; j++)
+        {
+            for (int k = 0; k < length - j - 1; k++)
+            {
+                if (array[i][k] > array[i][k + 1])
+                {
+                    T temp = array[i][k];
+                    array[i][k] = array[i][k + 1];
+                    array[i][k + 1] = temp;
+                }
+            }
+        }
+    }
+
+
+}
+
+int main()
+{  
+    srand(time(NULL)); 
+    int userChoice;
+
+    int intArray[length][length];
+    double doubleArray[length][length];
+    char charArray[length][length];
+
+    cout << "Choose an array type: \n1) Int\n2) Double\n3) Char\n";
+    cin >> userChoice;
+
+    switch (userChoice)
+    {
+    case 1: {
+        arrayInit(intArray);
+        arrayOut(intArray);
+        arrayMinMax(intArray);
+        arraySort(intArray);
+        arrayOut(intArray);
+        break;
+    }
+    case 2: {
+        arrayInit(doubleArray);
+        arrayOut(doubleArray);
+        arrayMinMax(doubleArray);
+        arraySort(doubleArray);
+        arrayOut(doubleArray);
+        break;
+    }
+    case 3: {
+        arrayInit(charArray);
+        arrayOut(charArray);
+        arrayMinMax(charArray);
+        arraySort(charArray);
+        arrayOut(charArray);
+        break;
+    }
+    default:
+        break;
+    }
+
+    main();
+}
+
+
