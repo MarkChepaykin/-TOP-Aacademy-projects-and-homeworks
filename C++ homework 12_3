@@ -1,0 +1,115 @@
+#include <iostream>
+#include <stdlib.h>
+#include <time.h>
+using namespace std;
+
+const int length = 4;
+int number, bulls = 0, cows = 0, tryCounter = 1;;
+int userArray[length], arrayToGuess[length];
+
+int nod(int a, int b) {
+    if (b == 0) {
+        return a;
+    }
+    else {
+        return nod(b, a % b);
+    }
+}    
+
+void firstTask() {
+    int num1, num2;
+
+    cout << "Enter first number: ";
+    cin >> num1;
+    cout << "Enter second number: ";
+    cin >> num2;
+
+    int answer = nod(num1, num2);
+    cout << "Largest common denominator: " << answer;
+}
+
+void guesser() {
+    // user input
+    cout << "Enter a 4 digit number: ";
+    cin >> number;
+
+    // wrong input check
+    if (number < 1000 || number > 9999)
+    {
+        cout << "Wrong input, try again" << "\n";
+        guesser(); 
+    }
+    else
+    {
+        // Break number into an array
+        for (int i = 0; i < length; i++) {
+            userArray[i] = number % 10;
+            number /= 10;
+        }
+        // Reverse array
+        for (int i = 0, j = length - 1; i < length / 2; i++, j--) {
+            int temp = userArray[i];
+            userArray[i] = userArray[j];
+            userArray[j] = temp;
+        }
+        // reset counter
+        cows = 0;
+        bulls = 0;
+
+        // count bulls and cows
+        for (int i = 0; i < length; i++)
+        {
+            if (userArray[i] == arrayToGuess[i]) {
+                cows++;
+            }
+            else
+            {
+                for (int j = 0; j < length; j++)
+                {
+                    if (arrayToGuess[i] == userArray[j]) bulls++; break;
+                }
+            }
+        }
+        // check for the win 
+        if (cows == 4) {
+            cout << "You've guessed it! You have tried " << tryCounter << " times!\n";
+        }
+        else {
+            cout << "Bulls: " << bulls << "\nCows: " << cows << "\n";
+            tryCounter++;
+            guesser();
+        }
+    }
+}
+
+void secondTask()
+{       
+    //generate number as an array
+    for (int i = 0; i < length; i++)
+    {
+        arrayToGuess[i] = 1 + rand() % 9;
+        // VVVV Для дебага можно раскомментить, чтобы видеть отгадываемое число VVVV
+        //cout << arrayToGuess[i]; 
+    }
+    cout << "\n";
+    guesser();
+}
+
+int main()
+{
+    int choice;
+    srand(time(NULL));
+
+    cout << "Choose the task: \n1) Task 1\n2) Task 2\n";
+    cin >> choice;
+
+        switch (choice) {
+        case 1: firstTask(); main;
+            break;
+        case 2: secondTask(); main;
+            break;
+        default:
+            main();
+            break;
+        }
+}
