@@ -1,0 +1,102 @@
+#include <iostream>
+using namespace std;
+
+const int length = 5;
+int array1[length], array2[length];
+
+void arrayGen(int *array, int length) {
+
+    for (int i = 0; i < length; i++)
+    {
+        *array = rand() % 10;
+        cout << "\t" << *array++<< "\t";
+    }
+
+    cout << "\n";
+}
+
+void arrayCopy(int* array1, int* array2, int length){
+
+    for (int i = 0; i < length; i++)
+    {
+        *array2 = *array1++;
+        cout << "\t" << *array2++ << "\t";
+    }
+}
+
+void reverseArray(int* array, int length) {
+    int* start = array;
+    int* end = array + length - 1;
+
+    while (start < end) {
+        int temp = *start;
+        *start++ = *end;
+        *end-- = temp;
+    }
+    
+    for (int i = 0; i < length; i++) {
+        cout << "\t" << *array++ << "\t";
+    }
+}
+
+void task1() {
+
+    cout << "First array: ";
+    arrayGen(array1, length);
+    
+    cout << "Second array: ";
+    arrayGen(array2, length);
+
+    cout << "Copied array: ";
+    arrayCopy(array1, array2, length);
+
+    cout << "\n";
+    
+}
+
+void task2() {
+    cout << "Initial array: ";
+    arrayGen(array1, length);
+    cout << "Reversed: ";
+    reverseArray(array1, length);
+    cout << "\n\n";
+
+}
+void task3() {
+    task1();
+    cout << "Reversed: ";
+    reverseArray(array1, length);
+    cout << "\n\n";
+}
+
+void menu()
+{
+    int choice;
+    cout << "\nChoose a task: \n";
+    for (int i = 1; i <= 3; i++)
+    {
+        cout << i << ") Task " << i << "\n";
+    }
+    cin >> choice;
+    
+    switch (choice) {
+    case 1: task1();
+        break;
+    case 2: task2();
+        break;
+    case 3: task3();
+    default:
+        cout << "Try again";
+        break;
+    }
+
+}
+
+int main()
+{
+    srand(time(NULL));
+
+    while (true) {
+        menu();
+    }
+}
