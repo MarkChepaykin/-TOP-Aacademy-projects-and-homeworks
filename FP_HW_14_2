@@ -1,0 +1,246 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+
+using namespace std;
+
+//Функция распределения динамической памяти
+int* allocateMemory(int size) {
+    int* arr = new int[size];
+    return arr;
+}
+
+//Функция инициализации динамического массива.
+void initializeArray(int* arr, int size) {
+    for (int i = 0; i < size; i++) {
+        arr[i] = (rand() % 2000) - 1000;
+    }
+}
+
+//Функция печати динамического массива.
+void printArray(const int* arr, int size) {
+    for (int i = 0; i < size; i++) {
+        cout << i + 1 << ") " << arr[i] << "\n";
+    }
+    cout << "\n";
+}
+
+//Функция удаления динамического массива.
+void deleteArray(int* arr) {
+    delete[] arr;
+}
+
+//Функция добавления элемента в конец массива.
+int* addElementToArray(int* arr, int& size, int element) {
+    int* newArray = new int[size + 1];
+    for (int i = 0; i < size; i++) {
+        newArray[i] = arr[i];
+    }
+    newArray[size] = element;
+    size++;
+    delete[] arr;
+    return newArray;
+}
+
+//Функция вставки элемента по указанному индексу
+int* insertElement(int* arr, int& size, int index, int element) {
+    int* newArray = new int[size + 1];
+    for (int i = 0; i < index; i++) {
+        newArray[i] = arr[i];
+    }
+    newArray[index] = element;
+    for (int i = index + 1; i < size + 1; i++) {
+        newArray[i] = arr[i - 1];
+    }
+    size++;
+    delete[] arr;
+    return newArray;
+}
+
+//Функция удаления элемента по указанному индексу.
+int* deleteElement(int* arr, int& size, int index) {
+    int* newArray = new int[size - 1];
+    for (int i = 0; i < index; i++) {
+        newArray[i] = arr[i];
+    }
+    for (int i = index; i < size - 1; i++) {
+        newArray[i] = arr[i + 1];
+    }
+    size--;
+    delete[] arr;
+    return newArray;
+}
+
+// Первая задача
+void task1() {
+    int size = 5;
+    int* arr = nullptr;
+
+    arr = allocateMemory(size);
+    initializeArray(arr, size);
+    cout << "Main array\n";
+    printArray(arr, size);
+
+    cout << "Appended element (10) array\n";
+    arr = addElementToArray(arr, size, 10);
+    printArray(arr, size);
+
+    cout << "Inserted element (99) array\n";
+    arr = insertElement(arr, size, 1, 99);
+    printArray(arr, size);
+
+    cout << "Deleted element array\n";
+    arr = deleteElement(arr, size, 6);
+    printArray(arr, size);
+
+    deleteArray(arr);
+}
+
+// Проверка простого числа
+bool isPrime(int n) {
+    if (n < 2)
+        return false;
+    for (int i = 2; i * i <= n; i++) {
+        if (n % i == 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+// Удаление простого числа
+int* deletePrimeNumbers(int* arr, int& size) {
+    int i = 0, counter = 0;
+    while (i < size)
+    {
+        if (isPrime(arr[i])) {
+            cout << i + 1 << ") " << arr[i] << " is prime\n";
+            arr = deleteElement(arr, size, i);
+            counter++;
+        }
+        else {
+            i++;
+        }
+    }
+
+    cout << "Total primes: " << counter << "\n\n";
+    return arr;
+}
+
+// Вторая задача
+void task2() {
+    int size = 100;
+    int* arr = nullptr;
+
+    arr = allocateMemory(size);
+    initializeArray(arr, size);
+    printArray(arr, size);
+    arr = deletePrimeNumbers(arr, size);
+    printArray(arr, size);
+}
+
+void splitArray(int* arr, int& size, int* positiveArray, int* zeroArray, int* negativeArray, int& positiveSize, int& zeroSize, int& negativeSize) {
+
+
+    for (int i = 0; i < size; i++)
+    {
+        if (arr[i] == 0) zeroSize++;
+        else if (arr[i] > 0) positiveSize++;
+        else if (arr[i] < 0) negativeSize++;
+    }
+    cout << "Zeros: " << zeroSize << "\nPositives: " << positiveSize << "\nNegatives: " << negativeSize << "\n";
+
+    positiveArray = allocateMemory(positiveSize);
+    zeroArray = allocateMemory(zeroSize);
+    negativeArray = allocateMemory(negativeSize);
+
+    int positiveIndex = 0;
+    int zeroIndex = 0;
+    int negativeIndex = 0;
+
+    for (int i = 0; i < size; i++)
+    {
+        if (arr[i] > 0)
+        {
+            positiveArray[positiveIndex] = arr[i];
+            positiveIndex++;
+        }
+        else if (arr[i] < 0)
+        {
+            negativeArray[negativeIndex] = arr[i];
+            negativeIndex++;
+        }
+        else
+        {
+            zeroArray[zeroIndex] = arr[i];
+            zeroIndex++;
+        }
+    }
+    cout << "\nPositive array: \n";
+    printArray(positiveArray, positiveSize);
+    cout << "\Zero array: \n";
+    printArray(zeroArray, zeroSize);
+    cout << "\nNegative array: \n";
+    printArray(negativeArray, negativeSize);
+
+
+}
+
+//Написать функцию, которая получает указатель
+//на статический массив и его размер.Функция распределяет положительные, отрицательные и нулевые элементы
+//в отдельные динамические массивы.
+
+// Третья задача
+void task3() {
+    const int size = 20;
+    int arr[size];
+    int pSize = size;
+
+    int positiveSize = 0, zeroSize = 0, negativeSize = 0;
+    int* positiveArray = nullptr;
+    int* zeroArray = nullptr;
+    int* negativeArray = nullptr;
+
+    initializeArray(arr, size);
+    printArray(arr, size);
+    
+    splitArray(arr, pSize, positiveArray, zeroArray, negativeArray, positiveSize, zeroSize, negativeSize);
+
+    deleteArray(positiveArray);
+    deleteArray(zeroArray);
+    deleteArray(negativeArray);
+}
+
+void menu()
+{
+    int choice;
+    cout << "\nChoose a task: \n";
+    for (int i = 1; i <= 3; i++)
+    {
+        cout << i << ") Task " << i << "\n";
+    }
+    cin >> choice;
+    cout << "\n";
+
+    switch (choice) {
+    case 1: task1();
+        break;
+    case 2: task2();
+        break;
+    case 3: task3();
+        break;
+    default:
+        cout << "Try again";
+        break;
+    }
+
+}
+
+int main() {
+    srand((time(NULL)));
+
+    while (true) {
+        menu();
+    }
+
+}
