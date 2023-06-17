@@ -1,0 +1,184 @@
+#include <iostream>
+#include <string.h>
+#include <stdio.h>
+#include <cstring>
+#include <cctype>
+
+using namespace std;
+
+//Задание 1. Написать функцию, которая удаляет из строки символ с заданным номером.
+void removeSymbolByIndex(char* str);
+
+//Задание 2. Написать функцию, которая удаляет из строки все вхождения в нее заданного символа.
+void removeChar(char* str);
+
+//Задание 3.Написать функцию, которая вставляет в строку в указанную позицию заданный символ.
+void placeChar(char* str);
+
+//Задание 4. Написать программу, которая заменяет все 
+//символы точки «.» в строке, введенной пользователем, на символы восклицательного знака «!».
+void dotChanger(char* str);
+
+//Задание 5. Пользователь вводит строку символов и искомый символ, посчитать сколько раз он встречается в строке
+void charFinder(char* str);
+
+//Задание 6. Пользователь вводит строку.Определить количество букв, количество цифр и количество остальных
+//символов, присутствующих в строке.
+void charCounter(char* str);
+
+
+int main()
+{
+
+    char basicCString[] = "I would much rather use the regular string";
+   
+
+    string option[7] = {"Exit", "Remove symbol", "Remove character", "Place character", "Change dots to exclamation marks", "Find character", "Count character types"};
+    void (*MenuAct[6])(char*) = { removeSymbolByIndex, removeChar, placeChar, dotChanger, charFinder, charCounter};
+    int choice = 0;
+    
+    while (true) {
+        while (true) {
+            cout << "The current string: " << basicCString << "\n\n";
+            for (int i = 0; i < 7; i++)
+            {
+                cout << i << ") " << option[i] << "\n";
+            }
+            cout << "\nChoose an option: ";
+            cin >> choice;
+            cout << option[choice] << "\n";
+            if ((choice >= 1) && (choice <= 7)) break;
+            else cout << "Wrong input";
+        }
+        if (choice != 0)
+        {
+            (*MenuAct[choice - 1])(basicCString);
+            
+
+        }
+        else break;
+    }
+}
+
+void removeSymbolByIndex(char* str)
+{
+    int length = strlen(str);
+    int work = 0;
+
+    cout << str << "\n";
+    do{
+
+        int index = 0;
+        cout << "\nChoose what symbol to remove within range [1 - " << length << "] \n";
+        cin >> index;
+        index--;
+
+        if (index >= 0 && index < length)
+        {
+            for (int i = index; i < length - 1; i++)
+            {
+                str[i] = str[i + 1];
+            }
+            str[length - 1] = '\0';
+            work = 0;
+        }
+        else
+        {
+            cout << "Wrong input, try again\n";
+            work = 1;
+        }
+    } while (work == 1);
+    cout << "Modified string: " << str << "\n";
+}
+
+void removeChar(char* str)
+{
+    int length = strlen(str);
+    int index = 0, newIndex = 0;
+    char ch;
+    cout << str << "\n";
+    cout << "Choose a char: ";
+    cin >> ch;
+
+    while (index < length) {
+        if (str[index] != ch) {
+            str[newIndex] = str[index];
+            newIndex++;
+        }
+        index++;
+    }
+    str[newIndex] = '\0';
+    cout << "Modified string: " << str << "\n";
+}
+
+void placeChar(char* str)
+{
+    int length = strlen(str);
+    int index = 0, newIndex = 0;
+    char ch;
+    cout << str << "\n";
+    cout << "Choose what symbol to add within range [1 - " << length << "] \n";
+    cin >> ch;
+    
+    cout << "Choose where to place it: \n";
+    cin >> index;
+
+    if (index < 0 || index > length) cout << "Out of ranga";
+    for (int i = length - 1; i >= index; i--)
+    {
+        str[i + 1] = str[i];
+    }
+    str[index] = ch;
+    cout << "Modified string: " << str << "\n";
+}
+
+void dotChanger(char* str) {
+    int length = strlen(str);
+
+    cout << "Enter a string, use the dots ( '.' ) : \n";
+    cin >> str;
+
+    for (int i = 0; i < length; i++)
+    {
+        if (str[i] == '.')
+        {
+            str[i] = '!';
+        }
+    }
+    cout << "Modified string: " << str << "\n";
+}
+
+void charFinder(char* str) {
+    int length = strlen(str);
+    char ch;
+    int counter = 0;
+    cout << "Enter a string: \n";
+    cin >> str;
+    cout << "Enter a char to find: \n";
+    cin >> ch;
+
+    for (int i = 0; i < length; i++)
+    {
+        if (str[i] == ch)
+        {
+            counter++;
+        }
+    }
+    cout << ch << " is found " << counter << " times\n";
+}
+
+void charCounter(char* str) {
+    int length = strlen(str);
+    int letterCounter = 0, digitCounter = 0, otherCounter = 0;
+
+    cout << "Enter a string: \n";
+    cin >> str;
+
+    for (int i = 0; i < length; i++)
+    {
+        if (isalpha(str[i])) letterCounter++;
+        else if (isdigit(str[i])) digitCounter++;
+        else otherCounter++;
+    }
+    cout << letterCounter << " letters\n" << digitCounter << " digits\n" << otherCounter << " other symbols\n";
+}
