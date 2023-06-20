@@ -1,0 +1,145 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <string.h>
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <cstring>
+#include <stdlib.h>
+
+using namespace std;
+
+//функция сравнивает две строки, и , если строки равны возвращает 0, если первая строка больше второй, то возвращает 1, иначе –1.
+int mystrcmp(const char* str1, const char* str2);
+
+// Функция конвертирует строку в число и возвращает это число
+int StringToNumber(char* str);
+
+// функция конвертирует число в строку и возвращает указатель на эту строку.
+char* NumberToString(int number);
+
+// функция преобразует строку в верхний регистр
+char* Uppercase(char* str1);
+
+// Функция преобразует строку в нижний регистр
+char* Lowercase(char* str1);
+
+//— функция реверсирует строку и возвращает указатель на новую строку
+char* mystrrev(char* str);
+
+int main() {
+
+	char str[100];
+	char str1[100];
+	char str2[100];
+	int choice, number;
+
+	while (true) {
+		cout << "\nChoose a function:\n1) Compare strings\n2) String to int\n3) Int to string\n4) Uppercase\n5) Lowercase\n6) Reverse\n";
+		cin >> choice;
+
+		switch (choice)
+		{
+		case 1: {
+			cout << "Enter string 1: ";
+			cin >> str1;
+			cout << "Enter string 2: ";
+			cin >> str2;
+			cout << mystrcmp(str1, str2) << "\n";
+			break;
+		}
+		case 2: {
+			cout << "Enter a number: ";
+			cin >> str;
+			cout << "Converted to int: " << StringToNumber(str) << "\n";
+			break;
+		}
+		case 3: {
+			cout << "Enter a number: ";
+			cin >> number;
+			cout << "Converted to string: " << NumberToString(number) << "\n";
+			break;
+		}
+		case 4: {
+			cout << "Enter a string: ";
+			cin >> str;
+			cout << "Uppercase: " << Uppercase(str) << "\n";
+			break;
+		}
+		case 5: {
+			cout << "Enter a string: ";
+			cin >> str;
+			cout << "Lowercase: " << Lowercase(str) << "\n";
+			break;
+		}
+		case 6: {
+			cout << "Enter a string: ";
+			cin >> str;
+			cout << "Reversed string: " << mystrrev(str) << "\n";
+			break;
+		}
+		default:
+			break;
+		}
+	}
+	return 0;
+}
+
+int mystrcmp(const char* str1, const char* str2) {
+	
+	int index1 = strlen(str1);
+	int index2 = strlen(str2);
+
+	if (index1 = index2) {
+		for (int i = 0; i < index1; i++)
+		{
+			if (str1[i] != str2[i]) {
+				cout << "First string is the same length as the second string, but the content is different\n";
+				return 0;
+			}
+		}
+	}
+	else if (index1 > index2) return 1;
+	else return -1;
+}
+
+int StringToNumber(char* str) {
+	return atoi(str);
+}
+
+char* NumberToString(int number) {
+	string str = to_string(number);
+	char* result = new char[str.length() + 1];
+	strcpy(result, str.c_str());
+	return result;
+}
+
+char* Uppercase(char* str1) {
+	int length = strlen(str1);
+	for (int i = 0; i < length; i++)
+	{
+		str1[i] = toupper(str1[i]);
+	}
+	return str1;
+}
+
+char* Lowercase(char* str1) {
+	int length = strlen(str1);
+
+	for (int i = 0; i < length; i++)
+	{
+		str1[i] = tolower(str1[i]);
+	}
+	return str1;
+}
+
+char* mystrrev(char* str) {
+	int length = strlen(str);
+	char* reversedStr = new char[length + 1];
+
+	for (int i = 0; i < length; i++)
+	{
+		reversedStr[i] = str[length - i - 1];
+	}
+	reversedStr[length] = '\0';
+	return reversedStr;
+}
