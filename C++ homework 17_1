@@ -1,0 +1,185 @@
+#include <iostream>
+#include <ctime>
+#include <stdlib.h>
+
+using namespace std;
+
+int** generate(int rows, int columns) {
+    int** A = new int* [rows];
+    for (int i = 0; i < rows; i++)
+    {
+        A[i] = new int[columns];
+    }
+    return A;
+}
+
+void initialize(int** A, int a, int b) {
+    for (int i = 0; i < a; i++)
+    {
+        for (int j = 0; j < b; j++)
+        {
+            A[i][j] = rand() % 100;
+        }
+    }
+}
+
+void print(int** Arr, int rows, int columns)
+{
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < columns; j++)
+        {
+            cout << Arr[i][j] << "\t";
+        }
+        cout << endl;
+    }
+    cout << endl;
+}
+
+int* addNum(int* arr, int size, int position) {
+    int* newArr = new int[size + 1];
+
+    int* arrPtr = arr;
+    for (int i = 0; i < size + 1; i++) {
+        if (i != position) {
+            newArr[i] = *arrPtr++;
+        }
+        else {
+            newArr[i] = rand() % 100;
+        }
+    }
+    delete[] arr;
+    return newArr;
+}
+
+int* deleteNum(int* arr, int size, int position) {
+    int* newArr = new int[size - 1];
+    int* arrPtr = arr;
+    for (int i = 0; i < size - 1; i++) {
+        if (i == position) {
+            arrPtr++;
+        }
+        newArr[i] = *arrPtr++;
+    }
+    delete[] arr;
+
+    return newArr;
+}
+
+void insertColumn(int** arr, int rows, int columns, int position) {
+    for (int i = 0; i < rows; i++) {
+        arr[i] = addNum(arr[i], columns, position);
+    }
+    return;
+}
+
+void deleteColumn(int** arr, int rows, int columns, int position) {
+
+    for (int i = 0; i < rows; i++) {
+        arr[i] = deleteNum(arr[i], columns, position);
+    }
+    return;
+}
+
+void task1and2() {
+    int** arr = nullptr;
+    int a, b, c;
+
+
+    cout << "Enter a: ";
+    cin >> a;
+    cout << "Enter b: ";
+    cin >> b;
+
+    cout << "\nInital array\n";
+    arr = generate(a, b);
+    initialize(arr, a, b);
+    print(arr, a, b);
+
+    cout << "Where to insert a column: ";
+    cin >> c;
+    cout << "\Column inserted\n";
+    insertColumn(arr, a, b++, c);
+    print(arr, a, b);
+
+    cout << "Which column to delete: ";
+    cin >> c;
+    cout << "\nColumn deleted\n";
+    deleteColumn(arr, a, b--, c);
+    print(arr, a, b);
+
+}
+
+
+void moveArray(int** arr, int rows, int columns, int hor, int vert) {
+    if (hor != 0) {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                int target = j + hor;
+                if (target >= columns) target -= columns;
+                if (target < 0) target += columns;
+                swap(arr[i][j], arr[i][target]);
+            }
+        }
+    }
+    if (vert != 0) {
+        for (int i = 0; i < vert; i++) {
+            int* temp = arr[rows - 1]; 
+            for (int j = rows - 1; j > 0; j--) {
+                arr[j] = arr[j - 1];
+            }
+            arr[0] = temp;
+        }
+    }
+}
+
+void task3() {
+
+    int** arr = nullptr;
+    int a, b;
+    int hor = 0, vert = 0;
+
+    cout << "Enter a: ";
+    cin >> a;
+    cout << "Enter b: ";
+    cin >> b;
+
+    cout << "\nInital array\n";
+    arr = generate(a, b);
+    initialize(arr, a, b);
+    print(arr, a, b);
+
+    cout << "\nMove horizontally: ";
+    cin >> hor;
+    cout << "\nMove vertically: ";
+    cin >> vert;
+
+    moveArray(arr, a, b, hor, vert);
+    cout << "\nFinal array\n";
+    print(arr, a, b);
+}
+
+int main()
+{
+
+    srand(time(NULL));
+    int choice;
+
+    cout << "1) Task 1 and 2\n2) Task 3";
+    cout << "\nChoose a task: ";
+    cin >> choice;
+
+    switch (choice)
+    {
+    case 1:     task1and2();
+        break;
+    case 2: task3();
+        break;
+    default:
+        break;
+    }
+
+
+
+    return 0;
+}
