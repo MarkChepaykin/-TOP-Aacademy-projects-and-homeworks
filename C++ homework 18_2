@@ -1,0 +1,251 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+struct сomplexNumber {
+    double real; 
+    double imaginary; 
+};
+
+
+struct car {
+    string name;
+    int length;
+    int clearance;
+    int engineVolume;
+    int horsePower;
+    int wheelDiameter;
+    string color;
+};
+
+сomplexNumber add(сomplexNumber num1, сomplexNumber num2) {
+    сomplexNumber sum;
+    sum.real = num1.real + num2.real;
+    sum.imaginary = num1.imaginary + num2.imaginary;
+    return sum;
+}
+
+сomplexNumber substract(сomplexNumber num1, сomplexNumber num2) {
+    сomplexNumber differece;
+    differece.real = num1.real - num2.real;
+    differece.imaginary = num1.imaginary - num2.imaginary;
+    return differece;
+}
+
+сomplexNumber multiply(сomplexNumber num1, сomplexNumber num2) {
+    сomplexNumber product;
+    product.real = (num1.real * num2.real) - (num1.imaginary * num2.imaginary);
+    product.real = (num1.real * num2.real) + (num1.imaginary * num2.imaginary);
+    return product;
+}
+
+сomplexNumber divide(сomplexNumber num1, сomplexNumber num2) {
+    сomplexNumber quotient;
+    double denominator = (num2.real * num2.real) + (num2.imaginary * num2.imaginary);
+    quotient.real = ((num1.real * num2.real) + (num1.imaginary * num2.imaginary)) / denominator;
+    quotient.imaginary = ((num1.imaginary * num2.real) - (num1.real * num2.imaginary)) / denominator;
+    return quotient;
+}
+
+void print(сomplexNumber num) {
+    cout << num.real;
+    if (num.imaginary >= 0)
+        cout << " + " << num.imaginary << "i";
+    else
+        cout << " - " << -num.imaginary << "i";
+    cout << endl;
+}
+
+void task1() {
+    int choice;
+    сomplexNumber num1 = { 3.4, 3.8 };
+    сomplexNumber num2 = { 2.2, -5.6 };
+    
+    cout << "\nA pair of complex numbers\n";
+    print(num1);
+    print(num2);
+
+    cout << "\nChoose an operation:\n1) Add\n2) Substract\n3) Multiply\n4) Divide\n";
+    cin >> choice;
+    switch (choice)
+    {
+    case 1: {
+        сomplexNumber sum = add(num1, num2);
+        cout << "Sum: ";
+        print(sum);
+        break;
+    }
+    case 2: {
+        сomplexNumber difference = substract(num1, num2);
+        cout << "Difference: ";
+        print(difference);
+        break;
+    }
+    case 3: {
+        сomplexNumber product = multiply(num1, num2);
+        cout << "Product: ";
+        print(product);
+        break;
+    }
+    case 4: {
+        сomplexNumber quotient = divide(num1, num2);
+        cout << "Quotient: ";
+        print(quotient);
+        break;
+    }
+    default:
+        cout << "Wrong input\n";
+        break;
+    }
+}
+
+
+
+
+int carSpecsTotal = 7;
+const int totalCars = 6;
+
+// set parameter function 
+void setSpec(car* currentCar, int spec) {
+    switch (spec)
+    {
+    case 1:
+        cout << "Change car name to: ";
+        cin >> currentCar->name;
+        cout << "New name: " << currentCar->name << "\n";
+        break;
+    case 2: 
+        cout << "Change car length to: ";
+        cin >> currentCar->length;
+        cout << "New length: " << currentCar->length << "\n";
+        break;
+    case 3: 
+        cout << "Change clearance to: ";
+        cin >> currentCar->clearance;
+        cout << "New clearance: " << currentCar->clearance << "\n";
+        break;
+    case 4:
+        cout << "Change engine volume to: ";
+        cin >> currentCar->engineVolume;
+        cout << "New engine volume: " << currentCar->engineVolume << "\n";
+        break;
+    case 5:
+        cout << "Change horse power to: ";
+        cin >> currentCar->horsePower;
+        cout << "New horse power: " << currentCar->horsePower << "\n";
+        break;
+    case 6:
+        cout << "Change wheel diameter to: ";
+        cin >> currentCar->name;
+        cout << "New wheel diameter: " << currentCar->wheelDiameter << "\n";
+        break;
+    case 7:
+        cout << "Change color to: ";
+        cin >> currentCar->color;
+        cout << "New color: " << currentCar->color << "\n";
+        break;
+    default:
+        break;
+    }
+}
+
+// show parameters function
+void printSpecs(car currentCar) {
+    cout << "\n1) Name: " << currentCar.name << "\n";
+    cout << "2) Length: " << currentCar.length << "mm\n";
+    cout << "3) Clearance: " << currentCar.clearance<< "mm\n";
+    cout << "4) Engine volume: " << currentCar.engineVolume<< "cc\n";
+    cout << "5) Horse power: " << currentCar.horsePower<< "hp\n";
+    cout << "6) Wheel diameter: " << currentCar.wheelDiameter << " inches\n";
+    cout << "7) Color: " << currentCar.color<< "\n";
+}
+
+
+//search parameter function
+void search(car* cars, string searchTerm) {
+    bool found = false;
+
+    for (int i = 0; i < totalCars; i++)
+    {
+        if (cars[i].name == searchTerm ||
+            to_string(cars[i].length) == searchTerm ||
+            to_string(cars[i].clearance) == searchTerm ||
+            to_string(cars[i].engineVolume) == searchTerm ||
+            to_string(cars[i].horsePower) == searchTerm ||
+            to_string(cars[i].wheelDiameter) == searchTerm ||
+            cars[i].color == searchTerm) {
+            cout << "\nCar Found: " << cars[i].name << "\n";
+            printSpecs(cars[i]);
+            found = true;
+
+        }
+    }
+    if (!found) {
+        cout << "\nNothing found.\n";
+    }
+}
+
+void task2() {
+
+    car cars[totalCars] = {
+        { "BMW", 4941, 216, 2998, 335, 19, "black" },
+        { "Mercedes", 4924, 201, 2999, 362, 20, "silver" },
+        { "Audi", 4726, 145, 1984, 201, 17, "white"},
+        { "Ford", 4788, 137, 2261, 450, 19, "red"},
+        { "Toyota", 4885, 160, 2487, 202, 18, "blue"},
+        { "Zhiguli", 4075, 170, 9000, 9001, 20, "baklazhan" }
+    };
+    int choice;
+    
+
+    cout << "\nCars:\n";
+    for (int i = 0; i < totalCars; i++)
+    {
+        cout << i + 1 << ") " << cars[i].name << "\n";
+    }
+
+    cout << "\n1) Set a spec\n2) Search specs\n";
+    cin >> choice;
+
+    switch (choice) {
+        case 1: {
+            int carChoice, specChoice;
+            cout << "Choose a car: ";
+            cin >> carChoice;
+            if (carChoice > 0 and carChoice <= totalCars) printSpecs(cars[carChoice - 1]);
+            else cout << "\nWrong input\n";
+
+            cout << "Choose a spec to change: ";
+            cin >> specChoice;
+            car* ptrCar = &cars[carChoice - 1];
+            setSpec(ptrCar, specChoice);
+
+        }
+            break;
+
+        case 2: {
+            string searchTerm;
+            cout << "Enter your querry: ";
+            cin >> searchTerm;
+            search(cars, searchTerm);
+        }
+            break;
+
+        default: cout << "Wrong input";
+            break;
+    }
+}
+
+int main()
+{
+    int choice;
+    cout << "Choose task:\n1) Task 1\n2) Task 2\n";
+    cin >> choice;
+
+    switch (choice)
+    {
+    case 1: task1(); break;
+    case 2: task2(); break;
+    default: cout << "Wrong input\n"; break;
+    }
+}   
