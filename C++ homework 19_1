@@ -1,0 +1,223 @@
+#include <iostream>
+#include <string>
+#include <algorithm>
+
+using namespace std;
+
+// Cтруктура «Книга»(название, автор, издательство, жанр)
+struct Book {
+    string name;
+    string author;
+    string publisher;
+    string genre;
+};
+
+int totalParameters = 4;
+int totalBooks = 10;
+
+// Печать одной книги;
+void printBook(Book book) {
+    
+    cout << book.name << "\n";
+    cout << "Author: " << book.author << "\n";
+    cout << "Publisher: " << book.publisher << "\n";
+    cout << "Genre: " << book.genre << "\n";
+}
+// Печать всех книг;
+void printBooks(Book books[]) {
+    cout << "=======================================================================================\n\n";
+    for (int i = 0; i < totalBooks; i++)
+    {
+        cout << i + 1 << ": ";
+        printBook(books[i]);
+        cout << "\n";
+    }
+}
+
+// Редактировать книгу;
+void editBook(Book books[]) {
+    int bookChoice, paramChoice;
+
+    cout << "Choose a book (1-10): ";
+    cin >> bookChoice;
+
+    cout << "Choose a parameter to change: \n";
+    cout << "1) Name" << "\n";
+    cout << "2) Author: " << "\n";
+    cout << "3) Publisher: " << "\n";
+    cout << "4) Genre: "  << "\n";
+    cout << "Choose a parameter to change: ";
+    cin >> paramChoice;
+
+    cin.ignore();
+    switch (paramChoice)
+    {
+    case 1: {
+        cout << "\nSet name: ";
+        getline(cin, books[bookChoice - 1].name);
+        break;
+    }
+    case 2: {
+        cout << "\nSet author: ";
+        getline(cin, books[bookChoice - 1].author);
+        break;
+    }
+    case 3: {
+        cout << "\nSet publisher: ";
+        getline(cin, books[bookChoice - 1].publisher);
+        break;
+    }
+    case 4: {
+        cout << "\nSet genre: ";
+        getline(cin, books[bookChoice - 1].genre);
+        break;
+    }
+    default:
+        break;
+    }
+
+    printBook(books[bookChoice]);
+}
+
+// Поиск книги по названию;
+void searchByName(Book* books) {
+    string querry;
+    bool notFound = true;
+
+    cout << "\nSearch by name: ";
+    cin.ignore();
+    getline(cin, querry);
+
+    if (notFound = true) {
+        for (int i = 0; i < totalBooks; i++)
+        {
+            if (books[i].name == querry) {
+                cout << "Found: ";
+                printBook(books[i]);
+                notFound = false;
+            }
+        }
+    }
+    else cout << "Nothing found\n";
+}
+
+
+// Поиск книг по автору;
+void searchByAuthor(Book* books) {
+    string querry;
+    bool notFound = true;
+
+    cout << "\nSearch by author: ";
+    /*cin.ignore();*/
+    getline(cin, querry);
+
+    if (notFound = true) {
+        for (int i = 0; i < totalBooks; i++)
+        {
+            if (books[i].author == querry) {
+                cout << "Found: ";
+                printBook(books[i]);
+                notFound = false;
+            }
+        }
+    }
+    else cout << "Nothing found\n";
+}
+
+// Компаратор для сортировки
+bool comparator(const Book& a, const Book& b, int field) {
+    switch (field) {
+    case 1: 
+        return a.name < b.name;
+    case 2: 
+        return a.author < b.author;
+    case 3: 
+        return a.publisher < b.publisher;
+    default:
+        cout << "Wrong input";
+        return false; 
+    }
+}
+
+// Сортировка массива по названию книг;
+void sortByName(Book* books) {
+    sort(books, books + totalBooks, [](const Book& a, const Book& b) {return comparator(a, b, 1); });
+}
+
+// Сортировка массива по автору;
+void sortByAuthor(Book* books) {
+    sort(books, books + totalBooks, [](const Book& a, const Book& b) {return comparator(a, b, 1); });
+}
+
+// Сортировка массива по издательству
+void sortByPublisher(Book* books) {
+    sort(books, books + totalBooks, [](const Book& a, const Book& b) {return comparator(a, b, 1); });
+}
+
+
+void menu(Book* books) {
+    int choice;
+    cout << "\nChoose an option: \n";
+    cout << "1) Edit a book\n";
+    cout << "2) Search by name\n";
+    cout << "3) Search by author\n";
+    cout << "4) Sort by name\n";
+    cout << "5) Sort by author\n";
+    cout << "6) Sort by publisher\n";
+    cin >> choice;
+
+    switch (choice)
+    {
+    case 1:
+        editBook(books);
+
+        break;
+    case 2:
+        searchByName(books);
+        break;
+    case 3:
+        searchByAuthor(books);
+        break;
+    case 4:
+        sortByName(books);
+        printBooks(books);
+        break;
+    case 5:
+        sortByAuthor(books);
+        printBooks(books);
+        break;
+    case 6:
+        sortByPublisher(books);
+        printBooks(books);
+        break;
+    default:
+        break;
+    }
+}
+
+int main()
+{
+    Book library[10]{
+        {"Harry Potter", "J.K. Rowling", "Bloomsbury", "Fantasy"},
+        {"To Kill a Mockingbird", "Harper Lee", "J. B. Lippincott & Co.", "Fiction"},
+        {"1984", "George Orwell", "Secker & Warburg", "Dystopian"},
+        {"Pride and Prejudice", "Jane Austen", "T. Egerton, Whitehall", "Romance"},
+        {"The Great Gatsby", "F. Scott Fitzgerald", "Charles Scribner's Sons", "Fiction"},
+        {"The Catcher in the Rye", "J.D. Salinger", "Little, Brown and Company", "Fiction"},
+        {"To the Lighthouse", "Virginia Woolf", "Hogarth Press", "Modernist"},
+        {"The Lord of the Rings", "J.R.R. Tolkien", "George Allen & Unwin", "Fantasy"},
+        {"Brave New World", "Aldous Huxley", "Chatto & Windus", "Dystopian"},
+        {"Crime and Punishment", "Fyodor Dostoevsky", "The Russian Messenger", "Fiction"}
+    };
+    Book* books = library;
+
+
+    cout << "The Library\n";
+    printBooks(books);
+
+    while (true) {
+        menu(books);
+    }
+
+
+}
