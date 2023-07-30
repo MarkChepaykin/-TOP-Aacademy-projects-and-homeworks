@@ -1,0 +1,233 @@
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <vector>
+
+using namespace std;
+
+int EmplCounter = 0;
+
+struct employee {
+    int number;
+    string name;
+    string surname;
+    int age;
+};
+
+//редактирование данных сотрудника, 
+employee editEmpl(employee& empl) {
+    cout << "Set employee name: ";
+    cin >> empl.name;
+    cout << "Set employee surname: ";
+    cin >> empl.surname;
+    cout << "Set employee age: ";
+    cin >> empl.age;
+    return empl;
+}
+
+//Программа должна обеспечивать ввод данных,
+void createEmpl(vector<employee>& employees) {
+    employee empl;
+
+    empl = editEmpl(empl);
+    empl.number = EmplCounter;
+
+    EmplCounter++;
+    employees.push_back(empl);
+
+}
+
+//удаление сотрудника,
+void removeEmpl(vector<employee>& employees) {
+    int choice;
+   
+    cout << "Which employee to remove: ";
+    cin >> choice;
+
+    if (choice >= 0 && choice <= employees.size()) {
+        employees.erase(employees.begin() + (choice));
+    }
+}
+
+void print(employee empl) {
+    cout << "#" << empl.number << ") " << empl.name << " " << empl.surname << ", " << empl.age << "\n";
+}
+
+//вывод обо всех сотрудниках;
+void printAll(vector<employee>& employees) {
+
+    bool notFound = true;
+
+    if (notFound) {
+        for (size_t i = 0; i < employees.size(); i++)
+        {
+            print(employees[i]);
+            notFound = false;
+        }
+    }
+    else  cout << "Nothing found\n";
+}
+
+// Вывод по фамилии 
+void printBySurname(vector<employee>& employees) {
+    string surname;
+    bool notFound = true;
+
+    cout << "Search by surname: ";
+    cin >> surname;
+    
+    if (notFound) {
+        for (int i = 0; i < employees.size(); i++)
+        {
+            if (surname == employees[i].surname)
+            {
+                print(employees[i]);
+                notFound = false;
+            }
+        }
+    }
+    else  cout << "Nothing found\n";
+}
+
+// Вывод по фамилиям на указанную букву 
+void printByChar(vector<employee>& employees) {
+    char ch;
+    bool notFound = true;
+    
+    cout << "Print by letter: ";
+    cin >> ch;
+
+    if (notFound) {
+        for (int i = 0; i < employees.size(); i++)
+        {
+            if (ch == employees[i].surname[0]) {
+                print(employees[i]);
+                notFound = false;
+            }
+        }
+    }
+    else  cout << "Nothing found\n";
+}
+
+//  Вывод по указанному возрасту
+void printByAge(vector<employee>& employees) {
+    int age;    
+    bool notFound = true;
+
+    cout << "Choose ages to print: ";
+    cin >> age;
+
+    if (notFound) {
+        for (size_t i = 0; i < employees.size(); i++)
+        {
+            if (age == employees[i].age) {
+                print(employees[i]);
+                notFound = false;
+            }
+
+        }
+        string filename = "search_by_lastname.txt";
+    }
+    else  cout << "Nothing found\n";
+}
+
+// Весь список сотрудников сохраняется в файл 
+void saveToFile(const vector<employee>& employees, const string& filename) {
+    ofstream outputFile(filename);
+    if (!outputFile) {
+        cerr << "Error opening file: " << filename << endl;
+        return;
+    }
+
+    for (const auto& employee : employees) {
+        outputFile << employee.number << " " << employee.name << " " << employee.surname << " " << employee.age << endl;
+    }
+
+    outputFile.close();
+    cout << "Data saved to file: " << filename << "\n";
+}
+
+
+// При старте программы происходит загрузка списка сотрудников из указанного пользователем файла.
+void loadFromFile(vector<employee>& employees, const string& filename) {
+     ifstream inputFile(filename);
+    if (!inputFile) {
+        cerr << "Error opening file: " << filename <<  endl;
+        return;
+    }
+
+    employee employee;
+    while (inputFile >> employee.number >> employee.name >> employee.surname >> employee.age ) {
+        employees.push_back(employee);
+    }
+
+    inputFile.close();
+    cout << "Data loaded from file: " << filename << "\n";
+}
+
+
+
+int main()
+{
+    vector<employee> employees;
+    string filename = "employees.txt";
+    int choice;
+
+    loadFromFile(employees, filename);
+    EmplCounter = EmplCounter + employees.size();
+
+    bool cycle = true;
+    while (cycle)
+    {
+        // Сохранение в процессе исполнения программы 
+        saveToFile(employees, filename);
+        cout << "\n1) Create \n2) Edit \n3) Delete";
+        cout << "\nSearch:\n4) By surname\n5) All\n6) By age\n7) By letter\n";
+        cout << "8) Save to file\n9) Exit\n";
+        cout << "Choose an action: ";
+        cin >> choice;
+
+        switch (choice) {
+        case 1:
+            createEmpl(employees);
+            break;
+        case 2:
+            int emplChoice;
+            cout << "Choose an employee: ";
+            cin >> emplChoice;
+            if (emplChoice >= 0 && emplChoice < employees.size()) {
+                editEmpl(employees[emplChoice]);
+            }
+            else cout << "No such employee";
+            break;
+        case 3:
+            removeEmpl(employees);
+            break;
+        case 4:
+            printBySurname(employees);
+            break;
+        case 5:
+            printAll(employees);
+            break;
+        case 6:
+            printByAge(employees);
+            break;
+        case 7:
+            printByChar(employees);
+            break;
+
+        case 8: 
+            // Сохранение по команде пользователя
+            saveToFile(employees, filename);
+            break;
+        case 9:
+            cycle = false;
+            break;
+        default:
+            cout << "Wrong input\n";
+            break;
+        }
+    }
+    // Сохранение при выходе из программы — автоматически
+    saveToFile(employees, filename);
+}
