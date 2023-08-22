@@ -1,0 +1,234 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <fstream>
+#include <sstream>
+
+using namespace std;
+
+struct Song 
+{
+    string name;
+    string text;
+    string author;
+    int year;
+};
+
+void loadSongText(Song& song) {
+    ifstream inputFile("songText.txt");
+    if (!inputFile) {
+        cerr << "Error opening file\n";
+        return;
+    }
+
+    string line;
+    while (getline(inputFile, line)) {
+        song.text = line;
+        getline(inputFile, line);
+    }
+    cout << "Loaded text from file\n";
+}
+
+// изменить текст песни
+void  edit(Song& song) {
+    int choice;
+    
+    cout << "Name:";
+    cin.ignore();
+    getline(cin, song.name);
+    cout << "Author:";
+    getline(cin, song.author);
+    cout << "Year:";
+    cin >> song.year;
+
+    cout << "Text: ";
+    cout << "\n1) Manual input\n2) Load from file\n";
+    cin >> choice;
+
+    switch (choice) {
+        // введение текста с клавиатуры
+    case 1:
+        cout << "Enter the text: ";
+        cin.ignore();
+        getline(cin, song.text);
+        break;
+        // введение текста песни из файла
+    case 2:
+        loadSongText(song);
+        break;
+    default: cout << "Wrong input\n";
+        break;
+    }
+}
+
+// создание песни
+void create(vector<Song>& songs) {
+    Song song;
+    edit(song);
+    songs.push_back(song);
+}
+
+// удалить текст песни
+void removeText(vector<Song> songs) {
+    int choice;
+    cout << "Choose song to remove text from (0 - " << songs.size() << "): ";
+    cin >> choice;
+
+
+    if (choice >= 0 && choice < songs.size()) {
+        songs[choice].text = "";
+        cout << "Text removed\n";
+    }
+    else cout << "Wrong input\n";
+
+}
+
+// вывести текст песни на экран 
+void print(Song song) {
+    cout << song.name << " by " << song.author << ", " << song.year << "\n";
+    cout << song.text << "\n\n";
+    
+}
+
+void printAll(vector<Song>& songs) {
+    for (int i = 0; i < songs.size(); i++)
+    {
+        print(songs[i]);
+    }
+}
+
+// сохранить текст песни в файл
+void saveToFile(const vector<Song>& songs, const string& filename) {
+    ofstream outputFile(filename);
+    if (!outputFile) {
+        cerr << "Error opening file: " << filename << "\n";
+        return;
+    }
+
+    for (const Song& song : songs) {
+        outputFile << song.name << "\n" << song.author << "\n" << song.year << "\n" << song.text << "\n";
+    }
+
+    outputFile.close();
+    cout << "Data saved to file: " << filename << "\n";
+}
+
+void loadFromFile(vector<Song>& songs, const string& filename) {
+    ifstream inputFile(filename);
+    if (!inputFile) {
+        cerr << "Error opening file: " << filename << "\n";
+        return;
+    }
+
+    songs.clear(); 
+
+    string line;
+    while (getline(inputFile, line)) {
+        Song song;
+        song.name = line;
+        getline(inputFile, song.author);
+        inputFile >> song.year;
+        inputFile.ignore(); 
+        getline(inputFile, song.text);
+
+        songs.push_back(song);
+    }
+
+    inputFile.close();
+    cout << "Data loaded from file: " << filename << "\n";
+}
+
+// поиск песен по автору
+void searchByAuthor(vector<Song> songs)
+{
+    string author;
+    bool notFound = true;
+
+    cout << "Search author: ";
+    cin.ignore();
+    getline(cin, author);
+
+    if (notFound) {
+        for (int i = 0; i < songs.size(); i++)
+        {
+            if (author == songs[i].author) {
+                print(songs[i]);
+                notFound = false;
+            }
+        }
+    }
+    else  cout << "Nothing found\n";
+}
+
+// поиск по слову
+void searchByWord(vector<Song>& songs) {
+    string query;
+    bool found = false;
+
+    cout << "Search by word: ";
+    cin.ignore();
+    getline(cin, query);
+    
+    for (const Song& song : songs) {
+        stringstream ss(song.text);
+        string word;
+
+        while (ss >> word) {
+            if (word == query) {
+                print(song);
+                found = true;
+                break;
+            }
+        }
+    }
+    if (!found) {
+        cout << "Nothing found\n";
+    }
+}
+
+int main()
+{
+    int choice;
+    vector<Song> songs;
+    string filename = "songs.txt";
+    bool cycle = true;
+
+    loadFromFile(songs, filename);
+
+    while (cycle)
+    {
+        cout << "\n1) Create song\n2) Edit song\n3) Remove song\n4) Save\n5) Print all songs\n6) Search by author\n7) Seacrh by word\n";
+        cin >> choice;
+
+        switch (choice)
+        {
+        case 1: create(songs);
+            break;
+        case 2: 
+            int song;
+            cout << "Which song to edit (0 - " << songs.size()-1 << "): ";
+            cin >> song;
+            if (song >= 0 && song < songs.size()) {
+                edit(songs[song]);
+            }
+            else cout << "Wrong input\n";
+            break;
+        case 3: 
+            removeText(songs);
+            break;
+        case 4: 
+            saveToFile(songs, filename);
+            break;
+        case 5:
+            printAll(songs);
+            break;
+        case 6:
+            searchByAuthor(songs);
+            break;
+        case 7: 
+            searchByWord(songs);
+        default:
+            break;
+        }
+    }
+}
